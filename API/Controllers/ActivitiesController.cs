@@ -28,5 +28,6 @@ namespace API.Controllers
             await Mediator.Send(new Create.Command {Activity = activity});
             return Ok();
         }
+        
     }
 }
