@@ -5,23 +5,30 @@ import ActivityDetails from '../details/ActivityDetails';
 import ActivityForm from '../form/ActivityForm';
 
 interface Props {
-    activities: Activity[];
-    selectedActivity: Activity | undefined;
-    selectActivity: (id: string) => void;
-    cancelSelectActivity: () => void;
+  activities: Activity[];
+  selectedActivity: Activity | undefined;
+  selectActivity: (id: string) => void;
+  cancelSelectActivity: () => void;
+  editMode: boolean;
+  openForm: (id: string) => void;
+  closeForm: () => void;
 }
 
-const ActivityDashboard = ({activities, selectedActivity, 
-  selectActivity, cancelSelectActivity}: Props) => {
+const ActivityDashboard = ({ activities, selectedActivity,
+  selectActivity, cancelSelectActivity, editMode, openForm, closeForm}: Props) => {
+    console.log("ActivityDashboard editmode: ",editMode);
   return (
     <div>
       <Grid>
         <Grid.Column width='10'>
-            <ActivityList activities={activities} selectActivity={selectActivity}/>
+          <ActivityList activities={activities} selectActivity={selectActivity} />
         </Grid.Column>
         <Grid.Column width='6'>
-          {selectedActivity && <ActivityDetails activity={selectedActivity} cancelSelectActivity={cancelSelectActivity}></ActivityDetails>}
-          <ActivityForm></ActivityForm>
+          {selectedActivity && !editMode &&<ActivityDetails 
+          activity={selectedActivity} 
+          cancelSelectActivity={cancelSelectActivity}
+          openForm={openForm}></ActivityDetails>}
+          {editMode && <ActivityForm closeForm={closeForm} activity={selectedActivity}></ActivityForm>}
         </Grid.Column>
       </Grid>
     </div>
