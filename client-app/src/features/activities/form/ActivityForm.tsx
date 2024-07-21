@@ -5,9 +5,10 @@ import { ChangeEvent, useState } from "react";
 interface Props {
   activity: Activity | undefined;
   closeForm: () => void;
+  createOrEdit: (activity: Activity) => void;
 }
 
-const ActivityForm = ({ activity: selectedActivity, closeForm }: Props) => {
+const ActivityForm = ({ activity: selectedActivity, closeForm, createOrEdit }: Props) => {
 
   const initialState = selectedActivity ?? {
     id: '',
@@ -21,7 +22,7 @@ const ActivityForm = ({ activity: selectedActivity, closeForm }: Props) => {
   const [activity, setActivity] = useState(initialState);
 
   function handleSubmit() {
-    console.log(activity);
+    createOrEdit(activity);
   }
 
   function handleInputChange (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -33,6 +34,7 @@ const ActivityForm = ({ activity: selectedActivity, closeForm }: Props) => {
     //console.log("target: ",event.target);
     //console.log("name and value pair: ",{[name]: value});
     //console.log("activity props: ",{...activity});
+    //console.log("activity: ",activity);
     }
 
   return (
