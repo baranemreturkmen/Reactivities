@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 const ActivityList = () => {
     const [target, setTarget] = useState('');
     const {activityStore} = useStore();
-    const {deleteActivity, activities, loading} = activityStore;
+    const {deleteActivity, activitiesByDate, loading} = activityStore;
 
     //e click event
     //All of these click events come from sth called a react synthetic event.
@@ -20,7 +20,7 @@ const ActivityList = () => {
   return (
     <Segment>
         <Item.Group divided>
-            {activities.map(activity => (
+            {activitiesByDate.map(activity => (
                 <Item key={activity.id}>
                     <Item.Content>
                         <Item.Header as='a'>{activity.title}</Item.Header>
