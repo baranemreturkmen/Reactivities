@@ -1,16 +1,12 @@
 import { Button, Item, Label, Segment } from "semantic-ui-react"
-import { Activity } from "../../../app/models/activity"
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    activities: Activity[];
-    deleteActivity: (id: string) => void;
-    submitting: boolean;
-}
-
-const ActivityList = ({activities, deleteActivity, submitting}: Props) => {
+const ActivityList = () => {
     const [target, setTarget] = useState('');
+    const {activityStore} = useStore();
+    const {deleteActivity, activities, loading} = activityStore;
 
     //e click event
     //All of these click events come from sth called a react synthetic event.
@@ -20,8 +16,6 @@ const ActivityList = ({activities, deleteActivity, submitting}: Props) => {
         setTarget(e.currentTarget.name);
         deleteActivity(id);
     }
-
-    const {activityStore} = useStore();
 
   return (
     <Segment>
@@ -39,7 +33,7 @@ const ActivityList = ({activities, deleteActivity, submitting}: Props) => {
                             <Button onClick={() => activityStore.selectActivity(activity.id)} floated='right' content='View' color='blue'></Button>
                             <Button 
                             name={activity.id}
-                            loading={submitting && target === activity.id} 
+                            loading={loading && target === activity.id} 
                             onClick={(e) => handleActivityDelete(e,activity.id)} 
                             floated='right' 
                             content='Delete' 
@@ -54,4 +48,4 @@ const ActivityList = ({activities, deleteActivity, submitting}: Props) => {
   )
 }
 
-export default ActivityList
+export default observer(ActivityList);
