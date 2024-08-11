@@ -1,11 +1,21 @@
 import { Button, Card, CardContent, CardDescription, CardHeader, CardMeta, Image } from "semantic-ui-react"
 import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
+import { useParams } from "react-router-dom";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useEffect } from "react";
 
 const ActivityDetails = () => {
 
   const {activityStore} = useStore();
-  const {selectedActivity: activity} = activityStore;
-  if (!activity) return;
+  const {selectedActivity: activity, loadActivity, loadingInitial} = activityStore;
+  const {id} = useParams();
+
+  useEffect(() => {
+    if (id) loadActivity(id);
+  }, [id, loadActivity])
+
+  if (loadingInitial || !activity) return <LoadingComponent></LoadingComponent>;
 
   return (
     <Card fluid>
@@ -29,4 +39,4 @@ const ActivityDetails = () => {
   )
 }
 
-export default ActivityDetails
+export default observer(ActivityDetails);
