@@ -8,7 +8,7 @@ import LoadingComponent from "../../../app/layout/LoadingComponent";
 const ActivityForm = () => {
 
   const { activityStore } = useStore();
-  const { selectedActivity, createActivity, updateActivity, loading, loadingInitial, loadActivity } = activityStore;
+  const { createActivity, updateActivity, loading, loadingInitial, loadActivity } = activityStore;
   const { id } = useParams();
 
   const [activity, setActivity] = useState({
